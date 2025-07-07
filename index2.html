@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网站功能组合生成器</title>
+  <style>
+    body { font-family: '微软雅黑', Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+    .container { max-width: 480px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 32px 24px; }
+    h2 { text-align: center; margin-bottom: 24px; }
+    .options { margin-bottom: 20px; }
+    .option { margin-bottom: 10px; }
+    .actions { text-align: center; margin-bottom: 16px; }
+    button { background: #4f8cff; color: #fff; border: none; border-radius: 4px; padding: 8px 20px; font-size: 16px; cursor: pointer; margin: 0 4px; }
+    button:active { background: #3466c2; }
+    .result-area { display: flex; align-items: flex-start; margin-top: 12px; }
+    #result { flex: 1; min-height: 80px; border: 1px solid #ddd; border-radius: 4px; padding: 10px; background: #fafbfc; font-size: 15px; margin-right: 8px; word-break: break-all; }
+    @media (max-width: 600px) { .container { padding: 16px 4px; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>网站功能组合生成器</h2>
+    <div class="options">
+      <div class="option"><input type="checkbox" id="style_eu"> <label for="style_eu">网站符合欧美主流风格</label></div>
+      <div class="option"><input type="checkbox" id="style_cn"> <label for="style_cn">网站符合中国主流风格</label></div>
+      <div class="option"><input type="checkbox" id="nav"> <label for="nav">包含菜单导航</label></div>
+      <div class="option"><input type="checkbox" id="products"> <label for="products">包含产品列表</label></div>
+      <div class="option"><input type="checkbox" id="news"> <label for="news">包含新闻</label></div>
+      <div class="option"><input type="checkbox" id="comments"> <label for="comments">包含用户评论</label></div>
+      <div class="option"><input type="checkbox" id="faq"> <label for="faq">包含常见问题</label></div>
+      <div class="option"><input type="checkbox" id="footer"> <label for="footer">包含页尾</label></div>
+    </div>
+    <div class="actions">
+      <button onclick="generateText()">生成文本</button>
+    </div>
+    <div class="result-area">
+      <div id="result" readonly></div>
+      <button onclick="copyText()">复制</button>
+    </div>
+  </div>
+  <script>
+    function generateText() {
+      const options = [
+        { id: 'style_eu', text: '网站符合欧美主流风格' },
+        { id: 'style_cn', text: '网站符合中国主流风格' },
+        { id: 'nav', text: '包含菜单导航' },
+        { id: 'products', text: '包含产品列表' },
+        { id: 'news', text: '包含新闻' },
+        { id: 'comments', text: '包含用户评论' },
+        { id: 'faq', text: '包含常见问题' },
+        { id: 'footer', text: '包含页尾' }
+      ];
+      const selected = options.filter(opt => document.getElementById(opt.id).checked).map(opt => opt.text);
+      let result = '';
+      if (selected.length > 0) {
+        result = '网站包含以下内容：\n' + selected.map((t, i) => (i+1)+'.'+t).join('\n');
+      } else {
+        result = '请先选择需要的功能或风格。';
+      }
+      document.getElementById('result').innerText = result;
+    }
+    function copyText() {
+      const text = document.getElementById('result').innerText;
+      if (!text || text === '请先选择需要的功能或风格。') {
+        alert('没有可复制的内容！');
+        return;
+      }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('已复制到剪贴板！');
+        });
+      } else {
+        // 兼容旧浏览器
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('已复制到剪贴板！');
+      }
+    }
+  </script>
+</body>
+</html> 

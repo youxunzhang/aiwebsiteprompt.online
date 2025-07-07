@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网站Demo详情</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fa; margin: 0; }
+    .navbar { background: #fff; box-shadow: 0 2px 8px #0001; padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
+    .nav-logo { font-weight: bold; color: #3466c2; font-size: 1.2rem; letter-spacing: 1px; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-link { color: #2d3a4a; text-decoration: none; font-size: 1rem; transition: color .2s; }
+    .nav-link:hover { color: #4f8cff; }
+    .container { max-width: 480px; margin: 40px auto 0; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 32px 20px; margin-top: 48px; }
+    .back { color: #4f8cff; text-decoration: none; font-size: 15px; display: inline-block; margin-bottom: 18px; }
+    .demo-title { font-size: 1.3rem; font-weight: bold; color: #234; margin-bottom: 12px; text-align: center; }
+    .prompt-label { color: #5a6a7a; font-size: 1rem; margin-bottom: 8px; text-align: center; }
+    .prompt-box { background: #f7f9fc; border: 1px solid #e0e6ef; border-radius: 6px; padding: 18px 12px; font-size: 1.08rem; color: #2d3a4a; margin-bottom: 18px; word-break: break-all; }
+    .copy-btn { background: #4f8cff; color: #fff; border: none; border-radius: 4px; padding: 8px 18px; font-size: 15px; cursor: pointer; display: block; margin: 0 auto; }
+    .copy-btn:active { background: #3466c2; }
+    .section { background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; margin: 32px auto 0; max-width: 480px; padding: 28px 20px; }
+    .section-title { font-size: 1.15rem; font-weight: bold; color: #234; margin-bottom: 16px; }
+    .comments-list { list-style: none; padding: 0; margin: 0; }
+    .comment-item { border-bottom: 1px solid #e0e6ef; padding: 12px 0; }
+    .comment-user { font-weight: bold; color: #3466c2; }
+    .comment-text { color: #2d3a4a; margin-top: 2px; }
+    .faq-list { list-style: none; padding: 0; margin: 0; }
+    .faq-q { font-weight: bold; color: #234; }
+    .faq-a { color: #5a6a7a; margin-bottom: 10px; }
+    footer { background: #2d3a4a; color: #fff; text-align: center; padding: 18px 8px 12px; margin-top: 40px; font-size: 0.98rem; }
+    @media (max-width: 600px) {
+      .container { padding: 14px 2px; margin-top: 16px; }
+      .prompt-box { font-size: 0.98rem; padding: 12px 6px; }
+      .section { padding: 14px 4px; }
+      .navbar { padding: 0 8px; }
+      .nav-links { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-logo">DEMO站</div>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html">首页</a>
+      <a class="nav-link" href="#about">关于</a>
+      <a class="nav-link" href="#contact">联系</a>
+    </div>
+  </nav>
+  <div class="container">
+    <a class="back" href="index.html">← 返回首页</a>
+    <div class="demo-title" id="demoTitle"></div>
+    <div class="prompt-label">提示词</div>
+    <div class="prompt-box" id="promptBox"></div>
+    <button class="copy-btn" onclick="copyPrompt()">复制提示词</button>
+  </div>
+  <div class="section" id="comments">
+    <div class="section-title">用户评论</div>
+    <ul class="comments-list">
+      <li class="comment-item"><span class="comment-user">Alice：</span><span class="comment-text">这个DEMO站点很实用，风格很喜欢！</span></li>
+      <li class="comment-item"><span class="comment-user">Bob：</span><span class="comment-text">展示效果很棒，适合参考建站。</span></li>
+      <li class="comment-item"><span class="comment-user">Cathy：</span><span class="comment-text">页面响应很快，手机上也很友好。</span></li>
+    </ul>
+  </div>
+  <div class="section" id="faq">
+    <div class="section-title">常见问题</div>
+    <ul class="faq-list">
+      <li><div class="faq-q">Q: 这些DEMO可以商用吗？</div><div class="faq-a">A: DEMO仅供学习和参考，商用请根据实际需求定制开发。</div></li>
+      <li><div class="faq-q">Q: 如何添加自己的DEMO？</div><div class="faq-a">A: 可在代码中扩展demos数组，或联系开发者。</div></li>
+      <li><div class="faq-q">Q: 支持哪些设备？</div><div class="faq-a">A: 支持PC和手机端自适应浏览。</div></li>
+    </ul>
+  </div>
+  <footer>
+    &copy; 2024 DEMO站. 保留所有权利.
+  </footer>
+  <script>
+    // 20个demo数据（与首页一致）
+    const demos = [
+      {id:1, name:'企业官网', prompt:'企业官网，包含首页、关于我们、产品展示、新闻动态、联系我们等模块，风格简洁大气，适合欧美主流审美。'},
+      {id:2, name:'个人博客', prompt:'个人博客，包含文章列表、分类、标签、评论、关于作者等，风格清新，内容为主。'},
+      {id:3, name:'电商商城', prompt:'电商商城，包含商品列表、购物车、订单、用户中心、支付等，欧美风格，注重转化。'},
+      {id:4, name:'作品集', prompt:'作品集网站，包含作品展示、项目介绍、个人简介、联系方式，极简欧美风。'},
+      {id:5, name:'教育培训', prompt:'教育培训网站，包含课程介绍、师资团队、报名咨询、新闻动态，蓝白配色，欧美风。'},
+      {id:6, name:'新闻资讯', prompt:'新闻资讯网站，包含新闻列表、专题、评论、搜索，信息流布局，欧美主流风格。'},
+      {id:7, name:'论坛社区', prompt:'论坛社区，包含板块、发帖、回帖、用户中心、消息通知，欧美风格，注重互动。'},
+      {id:8, name:'医疗健康', prompt:'医疗健康网站，包含科室介绍、医生团队、预约挂号、健康资讯，蓝色系，欧美风。'},
+      {id:9, name:'旅游出行', prompt:'旅游出行网站，包含目的地、路线推荐、攻略、用户点评、预订服务，欧美风格。'},
+      {id:10, name:'餐饮美食', prompt:'餐饮美食网站，包含菜单、预订、点评、门店信息、活动促销，欧美风格，图片丰富。'},
+      {id:11, name:'健身运动', prompt:'健身运动网站，包含课程、教练、预约、会员服务、健康资讯，欧美风格，动感设计。'},
+      {id:12, name:'科技公司', prompt:'科技公司官网，包含产品、解决方案、案例、团队、新闻，蓝灰色调，欧美风。'},
+      {id:13, name:'金融理财', prompt:'金融理财网站，包含产品、资讯、投资工具、客户服务，稳重蓝色系，欧美风格。'},
+      {id:14, name:'房地产', prompt:'房地产网站，包含楼盘展示、户型、资讯、预约看房、购房指南，欧美风格。'},
+      {id:15, name:'母婴亲子', prompt:'母婴亲子网站，包含产品、育儿知识、活动、社区，温馨欧美风。'},
+      {id:16, name:'汽车服务', prompt:'汽车服务网站，包含车型、预约试驾、服务网点、资讯，欧美风格，科技感。'},
+      {id:17, name:'宠物服务', prompt:'宠物服务网站，包含宠物用品、服务预约、养宠知识、社区，欧美风格，活泼设计。'},
+      {id:18, name:'婚礼策划', prompt:'婚礼策划网站，包含案例、服务、团队、预约、婚礼灵感，浪漫欧美风。'},
+      {id:19, name:'艺术画廊', prompt:'艺术画廊网站，包含作品、展览、艺术家介绍、预约参观，极简欧美风。'},
+      {id:20, name:'公益组织', prompt:'公益组织网站，包含项目介绍、新闻、志愿者招募、捐赠，简洁欧美风。'}
+    ];
+    function getQueryId() {
+      const params = new URLSearchParams(window.location.search);
+      return parseInt(params.get('id'), 10);
+    }
+    const id = getQueryId();
+    const demo = demos.find(d => d.id === id);
+    if (demo) {
+      document.getElementById('demoTitle').innerText = demo.name;
+      document.getElementById('promptBox').innerText = demo.prompt;
+    } else {
+      document.getElementById('demoTitle').innerText = '未找到该Demo';
+      document.getElementById('promptBox').innerText = '';
+      document.querySelector('.copy-btn').style.display = 'none';
+    }
+    function copyPrompt() {
+      const text = document.getElementById('promptBox').innerText;
+      if (!text) { alert('没有可复制的内容！'); return; }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('已复制到剪贴板！');
+        });
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('已复制到剪贴板！');
+      }
+    }
+  </script>
+</body>
+</html> 
